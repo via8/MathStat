@@ -12,12 +12,11 @@ maxX = stats.poisson.ppf(maxProbability, mu)
 
 x = numpy.arange(minX, maxX)
 y = stats.poisson.pmf(x, mu)
-
 plots.subplots(ncols=length)
 plots.suptitle('Poisson distribution, mu = ' + str(mu))
 
-binCount = 64
-binWidth = (maxX - minX) / binCount
+binCount = maxX - minX
+binWidth = 1
 for i in range(length):
     plots.subplot(1, length, i + 1)
     plots.xlim(minX, maxX)
@@ -29,6 +28,7 @@ for i in range(length):
     plots.plot(x, y)
 
     samples = stats.poisson.rvs(mu, size=N[i])
+    print(samples)
     bins = numpy.arange(min(samples), max(samples) + binWidth, binWidth)
     plots.hist(samples, bins, density=True)
     plots.legend(('theoretical', 'actual'), loc='upper left')
