@@ -3,7 +3,7 @@ from CorrelationCoefficients import *
 import scipy.stats as stats
 
 # parameters
-TESTS = 100
+TESTS = 1000
 N = [20, 60, 100]
 RHO = [0.0, 0.5, 0.9]
 CORRELATIONS = [pearson_correlation, spearman_correlation, quadrant_correlation]

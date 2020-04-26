@@ -12,14 +12,14 @@ def plot_dispersion_ellipse(samples, corr_coeff, subplot):
     sigma_x = numpy.sqrt(dispersion_x)
     sigma_y = numpy.sqrt(dispersion_y)
     angle_rad = numpy.arctan(2.0 * corr_coeff * sigma_x * sigma_y / (dispersion_x - dispersion_y)) / 2.0
-    cos_sq = numpy.cos(angle_rad)
-    sin_sq = numpy.sin(angle_rad)
-    cos_sq *= cos_sq
-    sin_sq *= sin_sq
-    sin_2 = numpy.sin(2.0 * angle_rad)
-    width = 4 * numpy.sqrt(dispersion_x * cos_sq + corr_coeff * sigma_x * sigma_y * sin_2 + dispersion_y * sin_sq)
-    height = 4 * numpy.sqrt(dispersion_x * sin_sq - corr_coeff * sigma_x * sigma_y * sin_2 + dispersion_y * cos_sq)
-    ellipse = patches.Ellipse((statchars.mean(samples[0]), statchars.mean(samples[1])), width, height, numpy.rad2deg(angle_rad))
+    cos = numpy.cos(angle_rad)
+    sin = numpy.sin(angle_rad)
+    A = 1 / (dispersion_x * (1 - corr_coeff * corr_coeff))
+    B = 1 / (dispersion_y * (1 - corr_coeff * corr_coeff))
+    C = corr_coeff / (sigma_x * sigma_y * (1 - corr_coeff * corr_coeff))
+    a = 1 / numpy.sqrt(A * cos * cos + B * sin * sin - 2 * C * sin * cos)
+    b = 1 / numpy.sqrt(A * cos * cos + B * sin * sin + 2 * C * sin * cos)
+    ellipse = patches.Ellipse((statchars.mean(samples[0]), statchars.mean(samples[1])), a * 4, b * 4, numpy.rad2deg(angle_rad))
     subplot.set_title("$\\rho$ = " + str(corr_coeff))
     subplot.plot(samples[0], samples[1], 'ro')
     subplot.add_patch(ellipse)

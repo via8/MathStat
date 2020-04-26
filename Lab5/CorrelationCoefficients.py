@@ -18,19 +18,5 @@ def spearman_correlation(samples):
 
 def quadrant_correlation(samples):
     assert(len(samples) == 2)
-    medx = statchars.median(samples[0])
-    medy = statchars.median(samples[1])
-    n1 = n2 = n3 = n4 = 0
-    n = len(samples[0])
-    for i in range(0, n):
-        if samples[0][i] > medx:
-            if samples[1][i] > medy:
-                n1 += 1
-            else:
-                n4 += 1
-        else:
-            if samples[1][i] > medy:
-                n2 += 1
-            else:
-                n3 += 1
-    return float((n1 + n3) - (n2 + n4)) / n
+    return statchars.mean(numpy.sign(samples[0] - statchars.median(samples[0])) *
+                          numpy.sign(samples[1] - statchars.median(samples[1])))
