@@ -1,1 +1,1 @@
-#Student work on 'Mathematical Statistics' course
+# Student work on 'Mathematical Statistics' course
